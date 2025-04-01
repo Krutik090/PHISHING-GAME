@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Congratulations! You Won!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url('https://i.makeagif.com/media/3-03-2015/OWTEEv.gif') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            font-size: 50px;
+            font-weight: bold;
+            text-shadow: 0 0 10px gold, 0 0 20px yellow;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        p {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px gold, 0 0 20px yellow;
+            }
+
+            100% {
+                text-shadow: 0 0 20px gold, 0 0 40px yellow;
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: red;
+            opacity: 10;
+            animation: confetti 10s linear infinite;
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎉 Congratulations! 🎉</h1>
+        <p>You successfully reported the phishing attempt and won the game!</p>
+        <p>Stay vigilant and keep your cybersecurity skills sharp! 🔥</p>
+    </div>
+
+    <script>
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                let confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                document.body.appendChild(confetti);
+
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.width = Math.random() * 10 + 5 + "px";
+                confetti.style.height = confetti.style.width;
+                confetti.style.animationDuration = (Math.random() * 3 + 1) + "s";
+                confetti.style.animationDelay = Math.random() + "s";
+
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+        setInterval(createConfetti, 500);
+    </script>
+</body>
+
+</html>

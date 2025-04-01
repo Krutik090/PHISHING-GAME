@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Game - Happy Fun Friday</title>
+
+    <!-- TailwindCSS (Local) -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- GSAP for Animations (Local) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3a8a, #9333ea);
+            font-family: "Arial", sans-serif;
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .game-option {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            width: 280px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-option:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1000;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="text-5xl font-extrabold mb-6 opacity-0" id="title">🎮 Choose Your Game - Happy Fun Friday 🎮</h1>
+    <p class="text-lg mb-8 opacity-0 text-gray-200" id="subtitle">Select a game to test your awareness skills!</p>
+
+    <div class="flex flex-col gap-6 opacity-0" id="game-options">
+        <div class="game-option bg-blue-600 hover:bg-blue-700" onclick="showForm('quiz.html')">📝 MCQ Quiz</div>
+        <div class="game-option bg-green-600 hover:bg-green-700" onclick="showForm('spinthewheel.html')">🎰 Spin the
+            Wheel</div>
+        <div class="game-option bg-yellow-600 hover:bg-yellow-700" onclick="showForm('spot.html')">🔍 Spot the
+            Difference</div>
+    </div>
+
+    <div id="user-form" class="modal">
+        <span class="close-btn" onclick="closeForm()">✖</span>
+        <h2 class="text-xl font-bold mb-4">Register to Play</h2>
+        <input type="text" id="username" placeholder="Username" class="border p-2 w-full mb-2">
+        <input type="email" id="email" placeholder="Email" class="border p-2 w-full mb-2">
+        <input type="text" id="empId" placeholder="empId" class="border p-2 w-full mb-2">
+        <button type="submit" onclick="registerUser()" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+    </div>
+
+    <script>
+        gsap.to("#title", { duration: 1, opacity: 1, y: 0, ease: "bounce" });
+        gsap.to("#subtitle", { duration: 1.2, opacity: 1, y: 0, delay: 0.5 });
+        gsap.to("#game-options", { duration: 1, opacity: 1, scale: 1, delay: 1 });
+
+        let selectedGame = "";
+
+        function showForm(gamePage) {
+            selectedGame = gamePage;
+            document.getElementById("user-form").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("user-form").style.display = "none";
+        }
+
+        function registerUser() {
+            // Form Validation
+            const username = document.querySelector("#username").value;
+            const email = document.querySelector("#email").value;
+            const empId = document.querySelector("#empId").value;
+
+            if (!username || !email || !empId) {
+                alert("All fields are required.");
+                return;
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email.");
+                return;
+            }
+
+            const formData = {
+                name: username,
+                email: email,
+                empId: empId,
+            };
+
+            fetch("http://localhost:5000/submit-user", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);  // Show a success message
+                    document.getElementById("user-form").style.display = "none"; // Hide the form
+                    document.querySelector("#username").value = ""; // Clear the username
+                    document.querySelector("#email").value = ""; // Clear the email
+                    document.querySelector("#empId").value = ""; // Clear the empId
+                    window.location.href = selectedGame;  // Redirect to the selected game
+                })
+                .catch(error => console.error("Error:", error));
+        }
+
+    </script>
+
+</body>
+
+</html>

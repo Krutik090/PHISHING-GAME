@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>⚠ You Are Hacked! ⚠</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            background: url('attack.webp') no-repeat center center fixed;
+            background-size: cover;
+            color: red;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 20px red;
+            animation: shake 0.5s infinite alternate;
+        }
+
+        h1 {
+            font-size: 50px;
+            font-weight: bold;
+            text-shadow: 0 0 10px red, 0 0 20px crimson;
+            animation: glitch 1s infinite alternate;
+        }
+
+        p {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        @keyframes shake {
+            from { transform: translate(-50%, -50%) rotate(-2deg); }
+            to { transform: translate(-50%, -50%) rotate(2deg); }
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 4px 4px red, -4px -4px blue; }
+            50% { text-shadow: -4px -4px red, 4px 4px blue; }
+            100% { text-shadow: 4px -4px red, -4px 4px blue; }
+        }
+
+        .glitch {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            animation: glitchBg 0.2s infinite;
+        }
+
+        @keyframes glitchBg {
+            0% { opacity: 0.2; }
+            50% { opacity: 0.5; }
+            100% { opacity: 0.2; }
+        }
+
+        .red-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: red;
+            box-shadow: 0 0 10px red;
+            animation: alert 1s infinite alternate;
+        }
+
+        @keyframes alert {
+            from { height: 5px; }
+            to { height: 15px; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="red-alert"></div>
+    <div class="container">
+        <h1>⚠ ALERT! YOU HAVE BEEN HACKED! ⚠</h1>
+        <p>Your system is now under our control...</p>
+        <p>Do you want to take back control? Think fast!</p>
+    </div>
+    <div class="glitch"></div>
+</body>
+
+</html>

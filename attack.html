@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚠ Cyber Attack in Progress! ⚠</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        .glitch {
+            animation: glitch 0.2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-black text-red-500 flex items-center justify-center h-screen relative overflow-hidden">
+    <!-- Background Hacking Animation -->
+    <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-20" style="background-image: url('attack.webp');"></div>
+    
+    <div class="text-center p-10 bg-gray-900 bg-opacity-90 rounded-lg shadow-2xl border-4 border-red-600 relative z-10 animate-pulse">
+        <h1 class="text-5xl font-bold glitch">⚠ SYSTEM BREACHED ⚠</h1>
+        <p class="text-lg mt-4">Your data is being stolen... 🔥</p>
+        <p class="text-lg">Initiating security lockdown... 🚨</p>
+        <div class="mt-6 flex justify-center space-x-4">
+            <button class="px-6 py-2 bg-red-600 text-white font-bold rounded-lg shadow-md hover:bg-red-800 transition duration-300">Take Action</button>
+            <button class="px-6 py-2 bg-gray-700 text-white font-bold rounded-lg shadow-md hover:bg-gray-900 transition duration-300">Abort</button>
+        </div>
+    </div>
+</body>
+</html>

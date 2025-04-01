@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin & Win - Phishing Awareness Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            height: 100vh;
+            overflow-y: auto;
+            /* Enable scrolling */
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: auto;
+            margin-top: 50px;
+        }
+
+        #wheel {
+            width: 100%;
+            height: 100%;
+            background: url('wheeler.png') no-repeat center;
+            background-size: contain;
+            transition: transform 4s ease-out;
+        }
+
+        /* The pin that points to the winning section */
+        
+        .popup,
+        .phishing-alert,
+        .phishing-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 400px;
+            z-index: 20;
+            /* Higher than the pin */
+        }
+
+        .pin {
+            position: absolute;
+            top: 250px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 40px;
+            background: black;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            z-index: 5;
+            /* Lower than popups */
+        }
+
+        #spin-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 20px;
+            background: gold;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        
+
+        .popup button,
+        .phishing-form button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .phishing-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid gray;
+            border-radius: 5px;
+            display: block;
+        }
+
+        .close-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="game-container">
+        <h1 class="text-4xl font-bold mt-10 animate-bounce">🎰 Spin & Win! 🎰</h1>
+        <p class="text-lg mt-2">Try your luck and win real cash!</p>
+
+        <div class="wheel-container">
+            <div id="wheel"></div>
+            <div class="pin"></div> <!-- The pin added above the wheel -->
+        </div>
+
+        <button id="spin-btn" class="mt-5 transition transform hover:scale-110">Spin the Wheel</button>
+    </div>
+
+    <!-- Fake "You Won" Popup -->
+    <div class="popup" id="win-popup">
+        <button class="close-btn" onclick="closePopup()">X</button>
+        <h2 class="text-xl font-bold">🎉 Congratulations! 🎉</h2>
+        <p>You just won **$1000**! Claim your reward now.</p>
+        <button onclick="showPhishingForm()">Claim Prize</button>
+    </div>
+
+    <!-- Fake Phishing Form -->
+    <div class="phishing-form" id="phishing-form">
+        <button class="close-btn" onclick="closePopup()">X</button>
+        <h2 class="text-lg font-bold">Claim Your Prize</h2>
+        <p>Fill out this form to receive your $1000 reward.</p>
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <input type="text" placeholder="Bank Account Number" required>
+        <input type="password" placeholder="Online Banking Password" required>
+        <button onclick="showPhishingAlert()">Submit</button>
+    </div>
+
+    <!-- Phishing Warning Message -->
+    <div class="phishing-alert" id="phishing-alert">
+        <button class="close-btn" onclick="closePopup()">X</button>
+        <h2 class="text-xl font-bold text-red-600">⚠️ WARNING: You Almost Got Phished! ⚠️</h2>
+        <p>Never enter your personal details on unknown websites.</p>
+        <p>This was a simulation to show how phishing scams work.</p>
+    </div>
+
+    <script>
+        function spinWheel() {
+            let wheel = document.getElementById("wheel");
+            let spinBtn = document.getElementById("spin-btn");
+
+            // Disable button while spinning
+            spinBtn.disabled = true;
+
+            // Random spin angle but always land on jackpot (faked)
+            let finalRotation = 3600 + (360 - 90); // Lands on jackpot section
+            wheel.style.transform = "rotate(" + finalRotation + "deg)";
+
+            setTimeout(() => {
+                document.getElementById("win-popup").style.display = "block";
+            }, 4000);
+        }
+
+        function showPhishingForm() {
+            document.getElementById("win-popup").style.display = "none";
+            document.getElementById("phishing-form").style.display = "block";
+        }
+
+        function showPhishingAlert() {
+            document.getElementById("phishing-form").style.display = "none";
+            document.getElementById("phishing-alert").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("win-popup").style.display = "none";
+            document.getElementById("phishing-form").style.display = "none";
+            document.getElementById("phishing-alert").style.display = "none";
+        }
+
+        document.getElementById("spin-btn").addEventListener("click", spinWheel);
+    </script>
+
+</body>
+
+</html>

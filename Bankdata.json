@@ -1,0 +1,18 @@
+[
+  [
+    "full_name",
+    "email",
+    "phone",
+    "address",
+    "bank_account",
+    "cvv"
+  ],
+  [
+    "Admin User",
+    "admin@gmail.com",
+    "1234567890",
+    "6,punit park, karamsad.",
+    "456789123",
+    "756"
+  ]
+]

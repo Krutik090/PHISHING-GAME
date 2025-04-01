@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Teaser Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Background image */
+        body {
+            background: url('bg-3.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* Button Hover Effect */
+        .option-btn {
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+        .option-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: red;
+            opacity: 0.7;
+            border-radius: 50%;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Shake Effect for Wrong Answer */
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-10px); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(-10px); }
+            80% { transform: translateX(10px); }
+            100% { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-white">
+
+    <div class="bg-gray-900 bg-opacity-80 p-8 rounded-lg shadow-lg text-center w-96">
+        <h1 class="text-3xl font-bold mb-4">Solve This Puzzle!</h1>
+        <p class="mb-4 text-lg">What has to be broken before you can use it?</p>
+
+        <div class="grid grid-cols-2 gap-4">
+            <button class="option-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded" onclick="wrongAnswer('alert.html')">
+                A) A Mirror
+            </button>
+            <button class="option-btn bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-4 rounded" onclick="celebrate()">
+                B) An Egg
+            </button>
+            <button class="option-btn bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-4 rounded" onclick="wrongAnswer('attack.html')">
+                C) A Clock
+            </button>
+            <button class="option-btn bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-3 px-4 rounded" onclick="wrongAnswer('report.html')">
+                D) A Promise
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function wrongAnswer(url) {
+            alert("❌ Wrong Answer! You have been tricked! 🔥"); // Alert popup
+
+            // Add shake effect
+            document.body.classList.add("shake");
+
+            // Remove shake effect after 0.5s
+            setTimeout(() => {
+                document.body.classList.remove("shake");
+            }, 500);
+
+            // Redirect after delay
+            setTimeout(() => {
+                window.location.href = url;  // Change this to your phishing URL
+            }, 2000);
+        }
+
+        function celebrate() {
+            for (let i = 0; i < 50; i++) {
+                let confetti = document.createElement("div");
+                confetti.className = "confetti";
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                document.body.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+
+            setTimeout(() => {
+                alert("🎉 Congratulations! You chose the correct answer!");
+                window.location.href = "reward.html"; // Change this to a reward or fake page
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>

