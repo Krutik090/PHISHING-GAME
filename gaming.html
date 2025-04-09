@@ -142,7 +142,7 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    alert(data.message);  // Show a success message
+                    // alert(data.message);  // Show a success message
                     document.getElementById("user-form").style.display = "none"; // Hide the form
                     document.querySelector("#username").value = ""; // Clear the username
                     document.querySelector("#email").value = ""; // Clear the email
