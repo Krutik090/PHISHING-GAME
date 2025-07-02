@@ -112,14 +112,6 @@ Use ethically and responsibly.
 
 ```
 
----
-
-## 🔖 Short Description (for GitHub "About" section)
-
-> A Node.js-based phishing simulation game for cybersecurity awareness and training, with fake login capture and log tracking.
-
----
-
 Let me know if you want to:
 - Add quiz redirection after login capture
 - Automatically send captured data to an admin dashboard
